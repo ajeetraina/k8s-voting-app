@@ -1,0 +1,29 @@
+#! worker-deployment.yaml
+# Generated code, do not edit
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: worker
+    namespace: example-voting-app
+    labels:
+        com.docker.compose.project: example-voting-app
+        com.docker.compose.service: worker
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            com.docker.compose.project: example-voting-app
+            com.docker.compose.service: worker
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                com.docker.compose.project: example-voting-app
+                com.docker.compose.service: worker
+                com.docker.compose.network.back-tier: "true"
+        spec:
+            containers:
+                - name: worker
+                  image: example-voting-app-worker
+                  imagePullPolicy: IfNotPresent

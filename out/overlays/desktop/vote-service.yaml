@@ -1,0 +1,9 @@
+#! vote-service.yaml
+# Generated code, do not edit
+apiVersion: v1
+kind: Service
+metadata:
+    name: vote-published
+    namespace: example-voting-app
+spec:
+    type: LoadBalancer

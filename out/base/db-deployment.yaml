@@ -1,0 +1,56 @@
+#! db-deployment.yaml
+# Generated code, do not edit
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: db
+    namespace: example-voting-app
+    labels:
+        com.docker.compose.project: example-voting-app
+        com.docker.compose.service: db
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            com.docker.compose.project: example-voting-app
+            com.docker.compose.service: db
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                com.docker.compose.project: example-voting-app
+                com.docker.compose.service: db
+                com.docker.compose.network.back-tier: "true"
+        spec:
+            containers:
+                - name: db
+                  image: postgres:15-alpine
+                  imagePullPolicy: IfNotPresent
+                  env:
+                    - name: POSTGRES_PASSWORD
+                      value: "postgres"
+                    - name: POSTGRES_USER
+                      value: "postgres"
+                  livenessProbe:
+                    exec:
+                        command:
+                            - /bin/sh
+                            - -c
+                            - /healthchecks/postgres.sh
+                    periodSeconds: 5
+                  ports:
+                    - name: db-5432
+                      containerPort: 5432
+                  volumeMounts:
+                    - name: var-lib-postgresql-data
+                      mountPath: /var/lib/postgresql/data
+                    - name: healthchecks
+                      mountPath: /healthchecks
+            volumes:
+                - name: var-lib-postgresql-data
+                  persistentVolumeClaim:
+                    claimName: db-db-data
+                - name: healthchecks
+                  hostPath:
+                    path: /Users/ajeetsraina/example-voting-app/healthchecks

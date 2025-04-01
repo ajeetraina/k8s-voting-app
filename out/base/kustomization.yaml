@@ -1,0 +1,20 @@
+#! kustomization.yaml
+# Generated code, do not edit
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+    - 0-example-voting-app-namespace.yaml
+    - back-tier-network-policy.yaml
+    - db-db-data-persistentVolumeClaim.yaml
+    - db-deployment.yaml
+    - db-expose.yaml
+    - front-tier-network-policy.yaml
+    - redis-deployment.yaml
+    - redis-expose.yaml
+    - result-deployment.yaml
+    - result-expose.yaml
+    - result-service.yaml
+    - vote-deployment.yaml
+    - vote-expose.yaml
+    - vote-service.yaml
+    - worker-deployment.yaml

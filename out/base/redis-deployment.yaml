@@ -1,0 +1,46 @@
+#! redis-deployment.yaml
+# Generated code, do not edit
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: redis
+    namespace: example-voting-app
+    labels:
+        com.docker.compose.project: example-voting-app
+        com.docker.compose.service: redis
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            com.docker.compose.project: example-voting-app
+            com.docker.compose.service: redis
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                com.docker.compose.project: example-voting-app
+                com.docker.compose.service: redis
+                com.docker.compose.network.back-tier: "true"
+        spec:
+            containers:
+                - name: redis
+                  image: redis:alpine
+                  imagePullPolicy: IfNotPresent
+                  livenessProbe:
+                    exec:
+                        command:
+                            - /bin/sh
+                            - -c
+                            - /healthchecks/redis.sh
+                    periodSeconds: 5
+                  ports:
+                    - name: redis-6379
+                      containerPort: 6379
+                  volumeMounts:
+                    - name: healthchecks
+                      mountPath: /healthchecks
+            volumes:
+                - name: healthchecks
+                  hostPath:
+                    path: /Users/ajeetsraina/example-voting-app/healthchecks

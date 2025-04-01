@@ -1,0 +1,47 @@
+#! vote-deployment.yaml
+# Generated code, do not edit
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: vote
+    namespace: example-voting-app
+    labels:
+        com.docker.compose.project: example-voting-app
+        com.docker.compose.service: vote
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            com.docker.compose.project: example-voting-app
+            com.docker.compose.service: vote
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                com.docker.compose.project: example-voting-app
+                com.docker.compose.service: vote
+                com.docker.compose.network.back-tier: "true"
+                com.docker.compose.network.front-tier: "true"
+        spec:
+            containers:
+                - name: vote
+                  image: example-voting-app-vote
+                  imagePullPolicy: IfNotPresent
+                  livenessProbe:
+                    exec:
+                        command: ['curl -f http://localhost']
+                    periodSeconds: 15
+                    initialDelaySeconds: 10
+                    timeoutSeconds: 5
+                    failureThreshold: 3
+                  ports:
+                    - name: vote-80
+                      containerPort: 80
+                  volumeMounts:
+                    - name: usr-local-app
+                      mountPath: /usr/local/app
+            volumes:
+                - name: usr-local-app
+                  hostPath:
+                    path: /Users/ajeetsraina/example-voting-app/vote

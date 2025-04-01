@@ -1,0 +1,19 @@
+#! vote-service.yaml
+# Generated code, do not edit
+apiVersion: v1
+kind: Service
+metadata:
+    name: vote-published
+    namespace: example-voting-app
+    labels:
+        com.docker.compose.project: example-voting-app
+        com.docker.compose.service: vote
+spec:
+    selector:
+        com.docker.compose.project: example-voting-app
+        com.docker.compose.service: vote
+    ports:
+        - name: vote-8080
+          port: 8080
+          protocol: TCP
+          targetPort: vote-80

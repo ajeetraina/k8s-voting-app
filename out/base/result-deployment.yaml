@@ -1,0 +1,42 @@
+#! result-deployment.yaml
+# Generated code, do not edit
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: result
+    namespace: example-voting-app
+    labels:
+        com.docker.compose.project: example-voting-app
+        com.docker.compose.service: result
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            com.docker.compose.project: example-voting-app
+            com.docker.compose.service: result
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                com.docker.compose.project: example-voting-app
+                com.docker.compose.service: result
+                com.docker.compose.network.back-tier: "true"
+                com.docker.compose.network.front-tier: "true"
+        spec:
+            containers:
+                - name: result
+                  image: example-voting-app-result
+                  imagePullPolicy: IfNotPresent
+                  ports:
+                    - name: result-80
+                      containerPort: 80
+                    - name: result-9229
+                      containerPort: 9229
+                  volumeMounts:
+                    - name: usr-local-app
+                      mountPath: /usr/local/app
+            volumes:
+                - name: usr-local-app
+                  hostPath:
+                    path: /Users/ajeetsraina/example-voting-app/result
