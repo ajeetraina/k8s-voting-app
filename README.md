@@ -1,4 +1,4 @@
-# A Simple Voting App using Compose Bridge
+<img width="1185" alt="image" src="https://github.com/user-attachments/assets/a5562b60-78fc-4619-b1db-8e1e504b576e" /># A Simple Voting App using Compose Bridge
 
 A simple distributed application running across multiple Docker containers. This solution uses Python, Node.js, .NET, with Redis for messaging and Postgres for storage.
 
@@ -52,6 +52,8 @@ Click on View Configurations and click "Convert and deploy to Kubernetes".
 <img width="804" alt="image" src="https://github.com/user-attachments/assets/6590ef7c-a5ee-4849-8223-6c6f6879b2a1" />
 
 
+
+<img width="1185" alt="image" src="https://github.com/user-attachments/assets/3738fb4d-ca64-495c-9b4f-20509a9aade1" />
 
 ## Notes
 
