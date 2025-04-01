@@ -1,50 +1,27 @@
-# Example Voting App
+# A Simple Voting App using Compose Bridge
 
-A simple distributed application running across multiple Docker containers.
+A simple distributed application running across multiple Docker containers. This solution uses Python, Node.js, .NET, with Redis for messaging and Postgres for storage.
 
-## Getting started
+## Prerequisite
 
-Download [Docker Desktop](https://www.docker.com/products/docker-desktop) for Mac or Windows. [Docker Compose](https://docs.docker.com/compose) will be automatically installed. On Linux, make sure you have the latest version of [Compose](https://docs.docker.com/compose/install/).
+- Docker Desktop
+- Enable Kubernetes with Kind cluster
 
-This solution uses Python, Node.js, .NET, with Redis for messaging and Postgres for storage.
 
-Run in this directory to build and run the app:
+<img width="1376" alt="image" src="https://github.com/user-attachments/assets/4e3e86bc-232a-4747-8540-9e2e5af70069" />
+
+
+
+## Bringing up the application stack
 
 ```shell
-docker compose up
+docker compose up -d --build
 ```
 
 The `vote` app will be running at [http://localhost:8080](http://localhost:8080), and the `results` will be at [http://localhost:8081](http://localhost:8081).
 
-Alternately, if you want to run it on a [Docker Swarm](https://docs.docker.com/engine/swarm/), first make sure you have a swarm. If you don't, run:
 
-```shell
-docker swarm init
-```
 
-Once you have your swarm, in this directory run:
-
-```shell
-docker stack deploy --compose-file docker-stack.yml vote
-```
-
-## Run the app in Kubernetes
-
-The folder k8s-specifications contains the YAML specifications of the Voting App's services.
-
-Run the following command to create the deployments and services. Note it will create these resources in your current namespace (`default` if you haven't changed it.)
-
-```shell
-kubectl create -f k8s-specifications/
-```
-
-The `vote` web app is then available on port 31000 on each host of the cluster, the `result` web app is available on port 31001.
-
-To remove them, run:
-
-```shell
-kubectl delete -f k8s-specifications/
-```
 
 ## Architecture
 
@@ -55,6 +32,23 @@ kubectl delete -f k8s-specifications/
 * A [.NET](/worker/) worker which consumes votes and stores them in…
 * A [Postgres](https://hub.docker.com/_/postgres/) database backed by a Docker volume
 * A [Node.js](/result) web app which shows the results of the voting in real time
+
+
+
+## Converting to K8s objects
+
+Select the  Compose Stack under Docker Dashboard and you'll see View Configuration.
+
+
+
+<img width="1078" alt="image" src="https://github.com/user-attachments/assets/18a5b20d-889c-48ee-a1aa-75a0dc3e5906" />
+
+Click on View Configurations and click "Convert and deploy to Kubernetes".
+
+<img width="1095" alt="image" src="https://github.com/user-attachments/assets/10fc3e18-6b8c-4f45-9aa3-3f2e11b6bf66" />
+
+
+
 
 ## Notes
 
