@@ -35,6 +35,46 @@ The `vote` app will be running at [http://localhost:8080](http://localhost:8080)
 
 
 
+## Option 1: Using K8s YAML file
+
+- Stop the compose services
+
+```
+docker compose down
+```
+
+- Go to k8s-specification directory and run the following command:
+
+```
+kubectl apply -f k8s-specifications
+```
+
+
+```
+deployment.apps/db created
+service/db created
+deployment.apps/redis created
+service/redis created
+deployment.apps/result created
+service/result created
+deployment.apps/vote created
+service/vote created
+deployment.apps/worker created
+```
+
+- Port forwarding
+
+```
+kubectl port-forward svc/vote 5000:8080
+```
+
+<img width="868" alt="image" src="https://github.com/user-attachments/assets/51b65b55-502e-4ac4-bdcf-391b3359c776" />
+
+
+
+
+## Option 2: Using Compose Bridge
+
 ## Converting to K8s objects
 
 Select the  Compose Stack under Docker Dashboard and you'll see View Configuration.
