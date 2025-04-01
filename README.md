@@ -49,6 +49,9 @@ Click on View Configurations and click "Convert and deploy to Kubernetes".
 
 
 
+<img width="804" alt="image" src="https://github.com/user-attachments/assets/6590ef7c-a5ee-4849-8223-6c6f6879b2a1" />
+
+
 
 ## Notes
 
